@@ -46,7 +46,7 @@
             this.webBrowserAutorization.Location = new System.Drawing.Point(0, 0);
             this.webBrowserAutorization.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowserAutorization.Name = "webBrowserAutorization";
-            this.webBrowserAutorization.Size = new System.Drawing.Size(494, 373);
+            this.webBrowserAutorization.Size = new System.Drawing.Size(665, 433);
             this.webBrowserAutorization.TabIndex = 0;
             this.webBrowserAutorization.Url = new System.Uri("", System.UriKind.Relative);
             this.webBrowserAutorization.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser1_DocumentCompleted);
@@ -93,6 +93,7 @@
             this.buttonWordGame.TabIndex = 4;
             this.buttonWordGame.Text = "Играть в слова";
             this.buttonWordGame.UseVisualStyleBackColor = true;
+            this.buttonWordGame.Click += new System.EventHandler(this.buttonWordGame_Click);
             // 
             // buttonSpam
             // 
@@ -116,7 +117,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(494, 373);
+            this.ClientSize = new System.Drawing.Size(665, 433);
             this.Controls.Add(this.buttonRepost);
             this.Controls.Add(this.buttonSpam);
             this.Controls.Add(this.buttonWordGame);

@@ -50,7 +50,19 @@ namespace WindowsFormsApplication1
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            webBrowserAutorization.BringToFront();
             webBrowserAutorization.Navigate("https://oauth.vk.com/authorize?client_id=6410347&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=friends+photos+messages&response_type=token&v=5.100&state=123456");
+        }
+
+        private void buttonWordGame_Click(object sender, EventArgs e)
+        {
+            string request = "https://api.vk.com/method/message.getConversation?filter=unread&user_id=1&" +
+                       access_token + "&v=5.52";
+            WebClient client = new WebClient();
+            string answer = Encoding.UTF8.GetString(client.DownloadData(request));
+            FormWordGame f = new FormWordGame();
+            f.ShowDialog();
+
         }
 
     }
