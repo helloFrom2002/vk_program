@@ -1,0 +1,8 @@
+C:\Users\rrr\Desktop\vk_\vk_\bin\Debug\vk_.exe
+C:\Users\rrr\Desktop\vk_\vk_\bin\Debug\vk_.pdb
+C:\Users\rrr\Desktop\vk_\vk_\obj\x86\Debug\vk_.csprojResolveAssemblyReference.cache
+C:\Users\rrr\Desktop\vk_\vk_\obj\x86\Debug\WindowsFormsApplication1.Form1.resources
+C:\Users\rrr\Desktop\vk_\vk_\obj\x86\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\rrr\Desktop\vk_\vk_\obj\x86\Debug\vk_.csproj.GenerateResource.Cache
+C:\Users\rrr\Desktop\vk_\vk_\obj\x86\Debug\vk_.exe
+C:\Users\rrr\Desktop\vk_\vk_\obj\x86\Debug\vk_.pdb
