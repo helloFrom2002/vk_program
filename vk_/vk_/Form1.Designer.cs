@@ -37,6 +37,7 @@
             this.buttonWordGame = new System.Windows.Forms.Button();
             this.buttonSpam = new System.Windows.Forms.Button();
             this.buttonRepost = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAvatar)).BeginInit();
             this.SuspendLayout();
             // 
@@ -113,6 +114,11 @@
             this.buttonRepost.Text = "Репосты";
             this.buttonRepost.UseVisualStyleBackColor = true;
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 3000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -144,6 +150,7 @@
         private System.Windows.Forms.Button buttonWordGame;
         private System.Windows.Forms.Button buttonSpam;
         private System.Windows.Forms.Button buttonRepost;
+        public System.Windows.Forms.Timer timer1;
     }
 }
 
