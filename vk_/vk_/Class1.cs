@@ -5,8 +5,7 @@ using System.Text;
 
 namespace WindowsFormsApplication1
 {
-    class Friends
-
+    class Friends1
     {
         public class UserGet
         {
