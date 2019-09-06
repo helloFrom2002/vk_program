@@ -41,6 +41,8 @@
             this.buttonSpam = new System.Windows.Forms.Button();
             this.pictureBoxAvatar = new System.Windows.Forms.PictureBox();
             this.webBrowserAuthorization = new System.Windows.Forms.WebBrowser();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAvatar)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,6 +53,7 @@
             this.buttonWordGame.Size = new System.Drawing.Size(113, 36);
             this.buttonWordGame.TabIndex = 4;
             this.buttonWordGame.Text = "Играть в слова";
+            this.toolTip1.SetToolTip(this.buttonWordGame, "Запуск бота для игры в слова");
             this.buttonWordGame.UseVisualStyleBackColor = true;
             this.buttonWordGame.Click += new System.EventHandler(this.buttonWordGame_Click);
             // 
@@ -77,7 +80,7 @@
             // 
             // timerGameWords
             // 
-            this.timerGameWords.Interval = 3000;
+            this.timerGameWords.Interval = 1000;
             this.timerGameWords.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // buttonAddComments
@@ -162,16 +165,25 @@
             this.webBrowserAuthorization.TabIndex = 13;
             this.webBrowserAuthorization.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser1_DocumentCompleted_1);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(575, 28);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 356);
+            this.textBox1.TabIndex = 15;
+            this.textBox1.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(724, 461);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.labelHelp);
             this.Controls.Add(this.buttonUserID);
             this.Controls.Add(this.buttonAddComments);
-        
             this.Controls.Add(this.buttonRepost);
             this.Controls.Add(this.buttonLike);
             this.Controls.Add(this.buttonWordGame);
@@ -199,6 +211,8 @@
         private System.Windows.Forms.Button buttonUserID;
         private System.Windows.Forms.PictureBox pictureBoxAvatar;
         private System.Windows.Forms.WebBrowser webBrowserAuthorization;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

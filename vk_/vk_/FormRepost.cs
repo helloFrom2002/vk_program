@@ -94,41 +94,44 @@ namespace WindowsFormsApplication1
                        
                
             }
-            // Куйбышева 23 3 этаж
+          
 
 
         }
         private void FormRepost_Load(object sender, EventArgs e)
         {
-            if(Properties.Settings.Default.SavesGroups == null)
+
+            if (Properties.Settings.Default.SavesGroups == null)
             {
 
             }
-            for (int i = 0; i < Properties.Settings.Default.SavesGroups.Count; i++)
+            else
             {
-                try
+                for (int i = 0; i < Properties.Settings.Default.SavesGroups.Count; i++)
                 {
+                    try
+                    {
 
-                    owner_id = Properties.Settings.Default.SavesGroups[i];
-                    string request2 = "https://api.vk.com/method/groups.getById?group_id=" + owner_id + "&" + access_token + "&v=5.52";
-                    WebClient client2 = new WebClient();
-                    string answer2 = Encoding.UTF8.GetString(client2.DownloadData(request2));
-                    GroupName groupName = JsonConvert.DeserializeObject<GroupName>(answer2);
-                    string[] texts = new string[3];
-                    texts[0] = groupName.response[0].name;
-                    texts[1] = owner_id;
-                    texts[2] = groupName.response[0].screen_name;
-                    ListViewItem itm = new ListViewItem(texts);
-                    listViewGroups.Items.Add(itm);
+                        owner_id = Properties.Settings.Default.SavesGroups[i];
+                        string request2 = "https://api.vk.com/method/groups.getById?group_id=" + owner_id + "&" + access_token + "&v=5.52";
+                        WebClient client2 = new WebClient();
+                        string answer2 = Encoding.UTF8.GetString(client2.DownloadData(request2));
+                        GroupName groupName = JsonConvert.DeserializeObject<GroupName>(answer2);
+                        string[] texts = new string[3];
+                        texts[0] = groupName.response[0].name;
+                        texts[1] = owner_id;
+                        texts[2] = groupName.response[0].screen_name;
+                        ListViewItem itm = new ListViewItem(texts);
+                        listViewGroups.Items.Add(itm);
+                    }
+                    catch
+                    { }
+
+
                 }
-                catch
-                { }
 
 
             }
-
-
-
 
             //8198
         }
