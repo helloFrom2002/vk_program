@@ -15,7 +15,6 @@ namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
-
         string useless;
         FormWordGame f = new FormWordGame();
         int num = 0;
@@ -26,33 +25,16 @@ namespace WindowsFormsApplication1
         int lengthtext = 1;
         int length = 0;
         string AnotherTxt;
-        int count = 0;
-        string user_id;
-        string friend_id;
-
         public Form1()
-        {
+        {//StreamWriter NewFile = File.CreateText(@"C:\Users\User4\Desktop\vk_program-master\vk_\vk_\bin\Debug\world_rus.txt");
+
+
             InitializeComponent();
         }
-        private void Form1_Load(object sender, EventArgs e)
+
+        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            webBrowserAuthorization.BringToFront();
-            webBrowserAuthorization.Navigate("https://oauth.vk.com/authorize?client_id=6410347&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=friends+photos+messages+wall&response_type=token&v=5.100&state=123456");
-
-        }
-
-        private void buttonRepost_Click(object sender, EventArgs e)
-        {
-
-            FormRepost f = new FormRepost();
-            f.access_token = access_token;
-            f.ShowDialog();
-
-        }
-
-        private void webBrowser1_DocumentCompleted_1(object sender, WebBrowserDocumentCompletedEventArgs e)
-        {
-            access_token = webBrowserAuthorization.Url.ToString();
+            access_token = webBrowserAutorization.Url.ToString();
             if (access_token.Contains("access_token"))
             {
                 int pos = access_token.IndexOf("#");
@@ -60,47 +42,34 @@ namespace WindowsFormsApplication1
 
                 pos = access_token.IndexOf("&e");
                 access_token = access_token.Remove(pos);
-                webBrowserAuthorization.Visible = false;
+                webBrowserAutorization.Visible = false;
 
-                string request = "https://api.vk.com/method/users.get?&" + access_token + "&v=5.95";
+
+                string request = "https://api.vk.com/method/users.get?fields=photo_200&" +
+                    access_token + "&v=5.52";
                 WebClient client = new WebClient();
                 string answer = Encoding.UTF8.GetString(client.DownloadData(request));
+
                 UserGet user = JsonConvert.DeserializeObject<UserGet>(answer);
-                user_id = user.response[0].id;
+
+                labelFirstName.Text = user.response[0].first_name;
+                labelLastName.Text = user.response[0].last_name;
+
+                pictureBoxAvatar.Load(user.response[0].photo_200);
             }
+
         }
 
-        private void buttonFriendsClean_Click(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
         {
-         
-        }
 
-        private void buttonAddComments_Click(object sender, EventArgs e)
-        {
-            FormComments c = new FormComments();
-            c.access_token = access_token;
-            c.ShowDialog();
-        }
-
-        private void buttonUserID_Click(object sender, EventArgs e)
-        {
-            string request = "https://api.vk.com/method/messages.getConversations?" +
-                    access_token + "&v=5.52";
-            WebClient client = new WebClient();
-            string answer = Encoding.UTF8.GetString(client.DownloadData(request));
-        }
-
-        private void buttonSpam_Click(object sender, EventArgs e)
-        {
-            LikesForm Like = new LikesForm();
-            Like.Access_token = access_token;
-            Like.User_id = user_id;
-            Like.Show();
+            webBrowserAutorization.BringToFront();
+            webBrowserAutorization.Navigate("https://oauth.vk.com/authorize?client_id=6410347&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=friends+photos+messages&response_type=token&v=5.100&state=123456");
         }
 
         private void buttonWordGame_Click(object sender, EventArgs e)
         {
-            f.ParentTimer = timerGameWords;
+            f.ParentTimer = timer1;
             f.ShowDialog();
             //timer1.Enabled = true;
             //f.labelError.Text = "начинаю поиск слова";
@@ -113,11 +82,10 @@ namespace WindowsFormsApplication1
             //string[] words=new string[100];
             // words=useless.Split('_') ;
 
-            Random rnd3 = new Random();
-            int value3 = rnd3.Next(4);
+
             Random rnd2 = new Random();
             int value2 = rnd2.Next(20);
-
+          
             Random rnd = new Random();
 
             //Получить очередное (в данном случае - первое) случайное число
@@ -153,7 +121,7 @@ namespace WindowsFormsApplication1
                     SecondMessage = true;
 
 
-                }
+                } 
                 if (SecondMessage == false)
                 {
 
@@ -165,39 +133,6 @@ namespace WindowsFormsApplication1
                 }
                 if (SecondMessage == true)
                 {
-                    if ((data.response.items[i].last_message.text == "")&&(data.response.items[i].last_message.text.Length == 0))
-                    {
-                        if (value3 == 0)
-                        {
-                            string request5 = "https://api.vk.com/method/messages.send?random_id=" + value.ToString() + "&user_id=" + data.response.items[i].last_message.from_id.ToString() + "&message=" + "sorry!" + "  я просто бот" + ", я просто хочу поиграть с тобой в слова... " + " отправь другое слово...пожалуйста..." + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
-                            WebClient client5 = new WebClient();
-                            string answer5 = Encoding.UTF8.GetString(client.DownloadData(request5));
-                            continue;
-                        }
-                        if (value3 == 1)
-                        {
-                            string request5 = "https://api.vk.com/method/messages.send?random_id=" + value.ToString() + "&user_id=" + data.response.items[i].last_message.from_id.ToString() + "&message=" +"Давай общаться словами, а не картинками всякими! "+ "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
-                            WebClient client5 = new WebClient();
-                            string answer5 = Encoding.UTF8.GetString(client.DownloadData(request5));
-                            continue;
-                        }
-                        if (value3 == 2)
-                        {
-                            string request5 = "https://api.vk.com/method/messages.send?random_id=" + value.ToString() + "&user_id=" + data.response.items[i].last_message.from_id.ToString() + "&message=" + "Дружочек, ты видимо не понял с кем связался. Вот эта твоя манера рeчи \"стикерская\" меня не впечатляет, давай встретимся, и я тебе объясню на понятном тебе языке, языке юникода." + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
-                            WebClient client5 = new WebClient();
-                            string answer5 = Encoding.UTF8.GetString(client.DownloadData(request5));
-                            continue;
-                        }
-                        if (value3 == 3)
-                        {
-                            string request5 = "https://api.vk.com/method/messages.send?random_id=" + value.ToString() + "&user_id=" + data.response.items[i].last_message.from_id.ToString() + "&message=" + "прекращай приколы и иди играть в слова" + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
-                            WebClient client5 = new WebClient();
-                            string answer5 = Encoding.UTF8.GetString(client.DownloadData(request5));
-                            continue;
-                        }
-                        
-                    }
-                    
                     char word = data.response.items[i].last_message.text[data.response.items[i].last_message.text.Length - 1];
                     //char last = aray[k].Length - 1;
                     string alphabet = "АаБбВвГгДдЕеЁёЖжЗзИиКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЭэЮюЯя";
@@ -215,11 +150,10 @@ namespace WindowsFormsApplication1
                     AnotherTxt = data.response.items[i].last_message.text;
                     for (int l = 0; l < data.response.items[i].last_message.text.Length; l++)
                     {
-                  
-                        if (alphabet.Contains(AnotherTxt[AnotherTxt.Length - 1]))
+                        if (alphabet.Contains(AnotherTxt[AnotherTxt.Length-1]))
                         {
                             word = AnotherTxt[AnotherTxt.Length - 1];
-
+                            
                             break;
                         }
                         else
@@ -228,89 +162,50 @@ namespace WindowsFormsApplication1
                             AnotherTxt = AnotherTxt.Remove(length);
                             //lengthtext = lengthtext + 1;
                         }
-                        
                     }
-                    
-
+                   
+                   
 
                     for (int k = 0; k < aray.Length; k++)
                     {
 
                         if (word == aray[k][0])
                         {
-                            
+                        
                                 k = k + value2;
                             
-                            {
-
-                                string request3 = "https://api.vk.com/method/messages.send?random_id=" + value.ToString() + "&user_id=";
-                                request3 += data.response.items[i].last_message.from_id.ToString() + "&message=";
-                                request3 += aray[k] + "\r\n" + "Теперь придумай слово,которое начинается на букву" + " ";
-                                int ii = aray[k].Length - 1;
-                                // request3 += aray[num][ii] + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
-                                string aaa = aray[k];
-                                request3 += aray[k][ii] + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
-                                WebClient client3 = new WebClient();
-                                string answer3 = Encoding.UTF8.GetString(client.DownloadData(request3));
-                                aray[k] = "斯";
-                                //useless = useless +"_" + aray[k];
-                                f.labelError.Text = "Cлово найдено";
-
-                                break;
-                            }
-                        }
-                    }
-
-
-
-                }
-                //f.imageList1.Images.Add(pictureBox2.Image);
-                ListViewItem lvi = new ListViewItem(texts[1]);//, imageList1.Images.Count - 1
-                f.listViewPlayers.Items.Add(lvi);
-                //Арбуз" + "\r\n" + "Теперь придумай слово,которое начинается на букву
-            }
-            //Messages data = JsonConvert.DeserializeObject<Messages>(answer);
-
-        }
-
-    }
-}
-
-          /*
-                
-                string request = "https://api.vk.com/method/friends.get?user_id=" + user_id + "&fields=name&count=&" + access_token + "&v=5.95";
-                WebClient client = new WebClient();
-                string answer = Encoding.UTF8.GetString(client.DownloadData(request));
-                FrendsList frendsList = JsonConvert.DeserializeObject<FrendsList>(answer);
-                FrendsList frb = new FrendsList();
-                if (answer.Contains("error"))
-                {
-                    MessageBox.Show("Неправильный ID пользователя");
-                 
-                }
-                else
-                {
-                    for (int i = 0; i < frendsList.response.count; i++)
-                    {
-                        if (frendsList.response.items[i].deactivated != null)
-                        {
-
-                            if (frendsList.response.items[i].deactivated.Contains("deleted") || frendsList.response.items[i].deactivated.Contains("banned"))
-                            {
-                                friend_id = frendsList.response.items[i].id;
-                                string request2 = "https://api.vk.com/method/friends.delete?user_id=" + friend_id + "&" + access_token + "&v=5.101";
-                                WebClient client2 = new WebClient();
-                                string answer2 = Encoding.UTF8.GetString(client.DownloadData(request2));
-                                count = count + 1;
                             
-                            }
+                        
+                            string request3 = "https://api.vk.com/method/messages.send?random_id=" + value.ToString() + "&user_id=";
+                            request3 += data.response.items[i].last_message.from_id.ToString() + "&message=";
+                            request3 += aray[k] + "\r\n" + "Теперь придумай слово,которое начинается на букву" + " ";
+                            int ii = aray[k].Length - 1;
+                            // request3 += aray[num][ii] + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
+                            string aaa = aray[k];
+                            request3 += aray[k][ii] + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
+                            WebClient client3 = new WebClient();
+                            string answer3 = Encoding.UTF8.GetString(client.DownloadData(request3));
+                             aray[k] = "斯";
+                            //useless = useless +"_" + aray[k];
+                            f.labelError.Text = "Cлово найдено"; 
+                           
+                            break;
                         }
+
+                        }
+
+                        
+
                     }
+                    //f.imageList1.Images.Add(pictureBox2.Image);
+                    ListViewItem lvi = new ListViewItem(texts[1]);//, imageList1.Images.Count - 1
+                    f.listViewPlayers.Items.Add(lvi);
+                    //Арбуз" + "\r\n" + "Теперь придумай слово,которое начинается на букву
                 }
+                //Messages data = JsonConvert.DeserializeObject<Messages>(answer);
 
             }
 
         }
-      
-}
-  */
+    }
+

@@ -171,7 +171,7 @@
             this.Controls.Add(this.labelHelp);
             this.Controls.Add(this.buttonUserID);
             this.Controls.Add(this.buttonAddComments);
-    
+        
             this.Controls.Add(this.buttonRepost);
             this.Controls.Add(this.buttonLike);
             this.Controls.Add(this.buttonWordGame);
