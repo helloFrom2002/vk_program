@@ -17,10 +17,14 @@ namespace WindowsFormsApplication1
     public partial class Form1 : Form
     {
         Collection<string> verif = new Collection<string>();
-        Char letter;
+
+        Dictionary<string, Collection<string>> dict = new Dictionary<string, Collection<string>>();
+
+
+        Char letter='\0';
         int number = 0;
         //int value2;
-string alphabet = "абвгдежзиклмнопрстуфхцчшщэюя";
+        string alphabet = "абвгдежзиклмнопрстуфхцчшщэюя";
         string useless;
         FormWordGame f = new FormWordGame();
         int num = 0;
@@ -38,11 +42,12 @@ string alphabet = "абвгдежзиклмнопрстуфхцчшщэюя";
 
         public Form1()
         {
+
             InitializeComponent();
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+
             foreach (string s in aray)
             {
                 for (int j = 0; j < alphabet.Length; j++)
@@ -50,7 +55,7 @@ string alphabet = "абвгдежзиклмнопрстуфхцчшщэюя";
                     if (s[0] == alphabet[j])
                     {
                         letterCount[j]++;
-                        
+
                     }
 
                 }
@@ -96,7 +101,7 @@ string alphabet = "абвгдежзиклмнопрстуфхцчшщэюя";
 
         private void buttonFriendsClean_Click(object sender, EventArgs e)
         {
-         
+
         }
 
         private void buttonAddComments_Click(object sender, EventArgs e)
@@ -123,8 +128,8 @@ string alphabet = "абвгдежзиклмнопрстуфхцчшщэюя";
         }
 
         private void buttonWordGame_Click(object sender, EventArgs e)
-        { 
-           
+        {
+
             f.ParentTimer = timerGameWords;
             f.ShowDialog();
             //timer1.Enabled = true;
@@ -141,7 +146,7 @@ string alphabet = "абвгдежзиклмнопрстуфхцчшщэюя";
             Random rnd3 = new Random();
             int value3 = rnd3.Next(4);
             Random rnd2 = new Random();
-           // int value2 = rnd2.Next(100);
+            // int value2 = rnd2.Next(100);
 
             Random rnd = new Random();
 
@@ -190,7 +195,7 @@ string alphabet = "абвгдежзиклмнопрстуфхцчшщэюя";
                 }
                 if (SecondMessage == true)
                 {
-                    if ((data.response.items[i].last_message.text == "")&&(data.response.items[i].last_message.text.Length == 0))
+                    if ((data.response.items[i].last_message.text == "") && (data.response.items[i].last_message.text.Length == 0))
                     {
                         if (value3 == 0)
                         {
@@ -201,7 +206,7 @@ string alphabet = "абвгдежзиклмнопрстуфхцчшщэюя";
                         }
                         if (value3 == 1)
                         {
-                            string request5 = "https://api.vk.com/method/messages.send?random_id=" + value.ToString() + "&user_id=" + data.response.items[i].last_message.from_id.ToString() + "&message=" +"Давай общаться словами, а не картинками всякими! "+ "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
+                            string request5 = "https://api.vk.com/method/messages.send?random_id=" + value.ToString() + "&user_id=" + data.response.items[i].last_message.from_id.ToString() + "&message=" + "Давай общаться словами, а не картинками всякими! " + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
                             WebClient client5 = new WebClient();
                             string answer5 = Encoding.UTF8.GetString(client.DownloadData(request5));
                             continue;
@@ -220,12 +225,12 @@ string alphabet = "абвгдежзиклмнопрстуфхцчшщэюя";
                             string answer5 = Encoding.UTF8.GetString(client.DownloadData(request5));
                             continue;
                         }
-                        
+
                     }
-                    
+
                     char word = data.response.items[i].last_message.text[data.response.items[i].last_message.text.Length - 1];
                     //char last = aray[k].Length - 1;
-                    
+
                     if (word == 'ь')
                     {
                         word = data.response.items[i].last_message.text[data.response.items[i].last_message.text.Length - 2];
@@ -236,11 +241,11 @@ string alphabet = "абвгдежзиклмнопрстуфхцчшщэюя";
                         word = data.response.items[i].last_message.text[data.response.items[i].last_message.text.Length - 2];
 
                     }
-                   
+
                     AnotherTxt = data.response.items[i].last_message.text;
                     for (int l = 0; l < data.response.items[i].last_message.text.Length; l++)
                     {
-                  
+
                         if (alphabet.Contains(AnotherTxt[AnotherTxt.Length - 1]))
                         {
                             word = AnotherTxt[AnotherTxt.Length - 1];
@@ -253,7 +258,7 @@ string alphabet = "абвгдежзиклмнопрстуфхцчшщэюя";
                             AnotherTxt = AnotherTxt.Remove(length);
                             //lengthtext = lengthtext + 1;
                         }
-                        
+
                     }
 
                     if ((AnotherTxt == "") && (AnotherTxt.Length == 0))
@@ -291,86 +296,107 @@ string alphabet = "абвгдежзиклмнопрстуфхцчшщэюя";
 
                     for (int k = 0; k < aray.Length; k++)
                     {
-                        if(verif.Contains(data.response.items[i].last_message.text))
+                        if (data.response.items[i].last_message.text[0] == letter||letter== '\0')
+                        {
+
+
+
+
+                            if (verif.Contains(data.response.items[i].last_message.text.ToLower()))
+                            {
+                                string request5 = "https://api.vk.com/method/messages.send?random_id=" + value.ToString() + "&user_id=" + data.response.items[i].last_message.from_id.ToString() + "&message=" + "Попробуй подобрать другое слово" + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
+                                WebClient client5 = new WebClient();
+                                string answer5 = Encoding.UTF8.GetString(client.DownloadData(request5));
+                                //continue;
+                                break;
+                            }
+                            else
+                            {
+                                if (word == aray[k][0])
+                                {
+                                    int w;
+                                    for (w = 0; w < alphabet.Length; w++)
+                                    {
+                                        if (word == alphabet[w])
+                                        {
+                                            // w = number;
+                                            break;
+                                        }
+                                    }
+
+                                    if (alphabet[w] == word)
+                                    {
+                                        int value2 = rnd2.Next(letterCount[w]);
+
+                                        k = k + value2;
+                                    }
+
+                                    //if (aray[k] == "斯")
+                                    // {
+                                    //     k = k + 1;
+                                    // }
+
+
+                                    {
+
+                                        string request3 = "https://api.vk.com/method/messages.send?random_id=" + value.ToString() + "&user_id=";
+                                        request3 += data.response.items[i].last_message.from_id.ToString() + "&message=";
+                                        request3 += aray[k] + "\r\n" + "Теперь придумай слово,которое начинается на букву" + "\"";
+                                        //if (word == 'ь')
+                                        //{
+                                        //    int ii = aray[k].Length - 2;
+                                        //}
+                                        //else
+                                        //{
+                                        int ii = aray[k].Length - 1;
+                                        //}
+                                        // request3 += aray[num][ii] + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
+                                        string aaa = aray[k];
+                                        request3 += aray[k][ii] + "\"" + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
+                                        WebClient client3 = new WebClient();
+                                        string answer3 = Encoding.UTF8.GetString(client.DownloadData(request3));
+                                        // aray[k] = "斯";
+                                        verif.Add(aray[k]);
+                                        verif.Add(data.response.items[i].last_message.text.ToLower());
+
+                                        letter = aray[k][aray[k].Length - 1];
+                                        f.labelError.Text = "Cлово найдено";
+
+
+                                        break;
+                                    }
+                                }
+                            }
+
+
+
+
+                            //f.imageList1.Images.Add(pictureBox2.Image);
+                            ListViewItem lvi = new ListViewItem(texts[1]);//, imageList1.Images.Count - 1
+                            f.listViewPlayers.Items.Add(lvi);
+                            //Арбуз" + "\r\n" + "Теперь придумай слово,которое начинается на букву
+                        }
+                        else
                         {
                             string request5 = "https://api.vk.com/method/messages.send?random_id=" + value.ToString() + "&user_id=" + data.response.items[i].last_message.from_id.ToString() + "&message=" + "Попробуй подобрать другое слово" + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
                             WebClient client5 = new WebClient();
                             string answer5 = Encoding.UTF8.GetString(client.DownloadData(request5));
-                           //continue;
+                            //continue;
                             break;
-                        }
-                        else
-                        {
-                        if (word == aray[k][0])
-                        {
-                            int w;
-                            for(w=0;w<alphabet.Length;w++)
-                            {
-                                if (word == alphabet[w])
-                                {
-                                   // w = number;
-                                    break;
-                                }
-                            }
-
-                            if (alphabet[w] == word)
-                            {
-                                int value2 = rnd2.Next(letterCount[w]);
-
-                                k = k + value2;
-                            }
-
-                               //if (aray[k] == "斯")
-                               // {
-                               //     k = k + 1;
-                               // }
-                               
-                            
-                            {
-
-                                string request3 = "https://api.vk.com/method/messages.send?random_id=" + value.ToString() + "&user_id=";
-                                request3 += data.response.items[i].last_message.from_id.ToString() + "&message=";
-                                request3 += aray[k] + "\r\n" + "Теперь придумай слово,которое начинается на букву" + "\"";
-                                //if (word == 'ь')
-                                //{
-                                //    int ii = aray[k].Length - 2;
-                                //}
-                                //else
-                                //{
-                                    int ii = aray[k].Length - 1;
-                                //}
-                                // request3 += aray[num][ii] + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
-                                string aaa = aray[k];
-                                request3 += aray[k][ii]+"\"" + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
-                                WebClient client3 = new WebClient();
-                                string answer3 = Encoding.UTF8.GetString(client.DownloadData(request3));
-                               // aray[k] = "斯";
-                                verif.Add(aray[k]);
-                                verif.Add(data.response.items[i].last_message.text);
-                                f.labelError.Text = "Cлово найдено";
-
-                                break;
-                            }
                         }
                     }
 
-
-
                 }
-                //f.imageList1.Images.Add(pictureBox2.Image);
-                ListViewItem lvi = new ListViewItem(texts[1]);//, imageList1.Images.Count - 1
-                f.listViewPlayers.Items.Add(lvi);
-                //Арбуз" + "\r\n" + "Теперь придумай слово,которое начинается на букву
+                //Messages data = JsonConvert.DeserializeObject<Messages>(answer);
+
             }
-            //Messages data = JsonConvert.DeserializeObject<Messages>(answer);
-
-            }}
+        }
 
 
 
-      
 
-       
+
+
 
     }
 }

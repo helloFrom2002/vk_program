@@ -32,3 +32,18 @@ C:\Users\User4\Desktop\папка папка\vk_program-master\vk_\vk_\obj\x86\D
 C:\Users\User4\Desktop\папка папка\vk_program-master\vk_\vk_\obj\x86\Debug\WindowsFormsApplication1.LikesForm.resources
 C:\Users\User4\Desktop\папка папка\vk_program-master\vk_\vk_\obj\x86\Debug\WindowsFormsApplication1.Properties.Resources.resources
 C:\Users\User4\Desktop\папка папка\vk_program-master\vk_\vk_\obj\x86\Debug\vk_.csproj.GenerateResource.Cache
+C:\Users\User\Desktop\vk_program-master\vk_\vk_\bin\Debug\vk_.exe.config
+C:\Users\User\Desktop\vk_program-master\vk_\vk_\bin\Debug\vk_.exe
+C:\Users\User\Desktop\vk_program-master\vk_\vk_\bin\Debug\vk_.pdb
+C:\Users\User\Desktop\vk_program-master\vk_\vk_\obj\x86\Debug\vk_.csprojAssemblyReference.cache
+C:\Users\User\Desktop\vk_program-master\vk_\vk_\obj\x86\Debug\WindowsFormsApplication1.Form1.resources
+C:\Users\User\Desktop\vk_program-master\vk_\vk_\obj\x86\Debug\WindowsFormsApplication1.FormComments.resources
+C:\Users\User\Desktop\vk_program-master\vk_\vk_\obj\x86\Debug\WindowsFormsApplication1.FormRepost.resources
+C:\Users\User\Desktop\vk_program-master\vk_\vk_\obj\x86\Debug\WindowsFormsApplication1.FormWordGame.resources
+C:\Users\User\Desktop\vk_program-master\vk_\vk_\obj\x86\Debug\WindowsFormsApplication1.LikesForm.resources
+C:\Users\User\Desktop\vk_program-master\vk_\vk_\obj\x86\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\User\Desktop\vk_program-master\vk_\vk_\obj\x86\Debug\vk_.csproj.GenerateResource.cache
+C:\Users\User\Desktop\vk_program-master\vk_\vk_\obj\x86\Debug\vk_.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\vk_program-master\vk_\vk_\obj\x86\Debug\vk_.csproj.CopyComplete
+C:\Users\User\Desktop\vk_program-master\vk_\vk_\obj\x86\Debug\vk_.exe
+C:\Users\User\Desktop\vk_program-master\vk_\vk_\obj\x86\Debug\vk_.pdb
