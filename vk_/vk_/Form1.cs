@@ -21,7 +21,7 @@ namespace WindowsFormsApplication1
         Dictionary<string, Collection<string>> dict = new Dictionary<string, Collection<string>>();
 
 
-        Char letter='\0';
+        Char BotLetter = '\0';
         int number = 0;
         //int value2;
         string alphabet = "абвгдежзиклмнопрстуфхцчшщэюя";
@@ -181,7 +181,8 @@ namespace WindowsFormsApplication1
                     WebClient client2 = new WebClient();
                     string answer2 = Encoding.UTF8.GetString(client.DownloadData(request2));
                     SecondMessage = true;
-
+                    dict.Add(data.response.items[i].last_message.from_id.ToString(),new Collection<string>());
+                    continue;
 
                 }
                 if (SecondMessage == false)
@@ -296,7 +297,7 @@ namespace WindowsFormsApplication1
 
                     for (int k = 0; k < aray.Length; k++)
                     {
-                        if (data.response.items[i].last_message.text[0] == letter||letter== '\0')
+                        if (data.response.items[i].last_message.text[0] == BotLetter || BotLetter == '\0')
                         {
 
 
@@ -337,8 +338,9 @@ namespace WindowsFormsApplication1
                                     // }
 
 
-                                    {
 
+                                    
+                                        
                                         string request3 = "https://api.vk.com/method/messages.send?random_id=" + value.ToString() + "&user_id=";
                                         request3 += data.response.items[i].last_message.from_id.ToString() + "&message=";
                                         request3 += aray[k] + "\r\n" + "Теперь придумай слово,которое начинается на букву" + "\"";
@@ -355,25 +357,32 @@ namespace WindowsFormsApplication1
                                         request3 += aray[k][ii] + "\"" + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
                                         WebClient client3 = new WebClient();
                                         string answer3 = Encoding.UTF8.GetString(client.DownloadData(request3));
-                                        // aray[k] = "斯";
-                                        verif.Add(aray[k]);
-                                        verif.Add(data.response.items[i].last_message.text.ToLower());
+                                    // aray[k] = "斯";
+                                    dict[data.response.items[i].last_message.from_id.ToString()].Add(aray[k]);
+                                    dict[data.response.items[i].last_message.from_id.ToString()].Add(data.response.items[i].last_message.text.ToLower());
+                                    //Collection.Add();
+                                    //verif.Add;
 
-                                        letter = aray[k][aray[k].Length - 1];
+                                    BotLetter = aray[k].ToUpper()[aray[k].Length - 1];
+                                        if (BotLetter == 'ь')
+                                        {
+                                            BotLetter = aray[k][aray[k].Length - 2];
+                                        }
                                         f.labelError.Text = "Cлово найдено";
-
-
+                                        ListViewItem lvi = new ListViewItem(texts[1]);//, imageList1.Images.Count - 1 
+                                        f.listViewPlayers.Items.Add(lvi);
                                         break;
-                                    }
+                                    
                                 }
+                                
                             }
 
 
 
 
                             //f.imageList1.Images.Add(pictureBox2.Image);
-                            ListViewItem lvi = new ListViewItem(texts[1]);//, imageList1.Images.Count - 1
-                            f.listViewPlayers.Items.Add(lvi);
+
+
                             //Арбуз" + "\r\n" + "Теперь придумай слово,которое начинается на букву
                         }
                         else
@@ -432,7 +441,7 @@ namespace WindowsFormsApplication1
                         }
                     }
                 }
-
+                //погуглить работу со словарем
             }
 
         }

@@ -138,7 +138,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(-5, -6);
+            this.pictureBox1.Location = new System.Drawing.Point(-10, -8);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(915, 518);
             this.pictureBox1.TabIndex = 10;
@@ -153,7 +153,7 @@
             this.labelRules.Size = new System.Drawing.Size(709, 168);
             this.labelRules.TabIndex = 11;
             this.labelRules.Text = "Для игры в слова с ботом ты должен:\r\n1.Зайти в эту группу\r\n2.Написать в лс сообще" +
-                "ства\r\n3.Ждать ответа";
+    "ства\r\n3.Ждать ответа";
             // 
             // buttonSkip
             // 
