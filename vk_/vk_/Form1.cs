@@ -16,10 +16,12 @@ namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
-        Collection<string> verif = new Collection<string>();
+        //Collection<string> verif = new Collection<string>();
 
         Dictionary<string, Collection<string>> dict = new Dictionary<string, Collection<string>>();
-
+        Dictionary<string, char> dictLetter = new Dictionary<string,char>();
+        Dictionary<string, bool> dictFirstMessage = new Dictionary<string, bool>();
+        Dictionary<string, bool> dictSecondMessage = new Dictionary<string, bool>();
 
         Char BotLetter = '\0';
         int number = 0;
@@ -32,6 +34,7 @@ namespace WindowsFormsApplication1
         string[] aray = File.ReadAllLines(Application.StartupPath + @"\word_rus.txt");
         bool FirstMessage = false;
         bool SecondMessage = false;
+       
         int lengthtext = 1;
         int length = 0;
         string AnotherTxt;
@@ -47,7 +50,7 @@ namespace WindowsFormsApplication1
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-
+ 
             foreach (string s in aray)
             {
                 for (int j = 0; j < alphabet.Length; j++)
@@ -162,39 +165,56 @@ namespace WindowsFormsApplication1
             Messages data = JsonConvert.DeserializeObject<Messages>(answer);
             //if (data.response.count > 0)
             //{
+
             for (int i = 0; i < data.response.count; i++)
             {
+
                 Application.DoEvents();
                 string[] texts = new string[2];
                 texts[0] = data.response.items[i].last_message.ToString();
                 texts[1] = data.response.items[i].last_message.from_id.ToString();
-
+                try
+                {
+                    dictFirstMessage.Add(data.response.items[i].last_message.from_id.ToString(), false);
+                    dictSecondMessage.Add(data.response.items[i].last_message.from_id.ToString(), false);
+                }
+                catch { }
                 f.textBoxDialog.Text = f.textBoxDialog.Text + data.response.items[i].last_message.text.ToString() + "\r\n";
+                
                 //for (int s = 0; s < data.response.count; s++)
                 //{
                 //Application.DoEvents();
 
                 //}
-                if ((data.response.items[i].last_message.text.ToLower() == "играть") && (FirstMessage == true) || (data.response.items[i].last_message.text.ToLower() == "\"играть\""))
+                if ((data.response.items[i].last_message.text.ToLower() == "играть") && (dictFirstMessage[data.response.items[i].last_message.from_id.ToString()] == true) || (data.response.items[i].last_message.text.ToLower() == "\"играть\""))
                 {
                     string request2 = "https://api.vk.com/method/messages.send?random_id=" + value.ToString() + "&user_id=" + data.response.items[i].last_message.from_id.ToString() + "&message=" + "Арбуз" + "\r\n" + "Теперь придумай слово,которое начинается на букву" + " \"З\"" + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
                     WebClient client2 = new WebClient();
                     string answer2 = Encoding.UTF8.GetString(client.DownloadData(request2));
                     SecondMessage = true;
+                    
+                    dictSecondMessage[data.response.items[i].last_message.from_id.ToString()]= SecondMessage;
+                    dictLetter.Add(data.response.items[i].last_message.from_id.ToString(), '\0');
                     dict.Add(data.response.items[i].last_message.from_id.ToString(),new Collection<string>());
-                    continue;
+                    
+                        
+                        continue;
+                    
 
                 }
-                if (SecondMessage == false)
+                if (dictSecondMessage[data.response.items[i].last_message.from_id.ToString()] == false)
                 {
 
                     string request1 = "https://api.vk.com/method/messages.send?random_id=" + value.ToString() + "&user_id=" + data.response.items[i].last_message.from_id.ToString() + "&message=" + "отправь" + "\"Играть\"" + ",если хочешь сыграть в слова...  " + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
                     WebClient client1 = new WebClient();
                     string answer1 = Encoding.UTF8.GetString(client.DownloadData(request1));
                     FirstMessage = true;
+                   
+                    dictFirstMessage[data.response.items[i].last_message.from_id.ToString()]=FirstMessage;
+
 
                 }
-                if (SecondMessage == true)
+                if (dictSecondMessage[data.response.items[i].last_message.from_id.ToString()] == true)
                 {
                     if ((data.response.items[i].last_message.text == "") && (data.response.items[i].last_message.text.Length == 0))
                     {
@@ -293,17 +313,18 @@ namespace WindowsFormsApplication1
                             continue;
                         }
 
+                        continue;
                     }
 
                     for (int k = 0; k < aray.Length; k++)
                     {
-                        if (data.response.items[i].last_message.text[0] == BotLetter || BotLetter == '\0')
+                        if (data.response.items[i].last_message.text[0] == dictLetter[data.response.items[i].last_message.from_id.ToString()] || dictLetter[data.response.items[i].last_message.from_id.ToString()] == '\0')
                         {
 
 
 
 
-                            if (verif.Contains(data.response.items[i].last_message.text.ToLower()))
+                            if (dict[data.response.items[i].last_message.from_id.ToString()].Contains(data.response.items[i].last_message.text.ToLower()))
                             {
                                 string request5 = "https://api.vk.com/method/messages.send?random_id=" + value.ToString() + "&user_id=" + data.response.items[i].last_message.from_id.ToString() + "&message=" + "Попробуй подобрать другое слово" + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
                                 WebClient client5 = new WebClient();
@@ -339,36 +360,39 @@ namespace WindowsFormsApplication1
 
 
 
-                                    
-                                        
-                                        string request3 = "https://api.vk.com/method/messages.send?random_id=" + value.ToString() + "&user_id=";
-                                        request3 += data.response.items[i].last_message.from_id.ToString() + "&message=";
-                                        request3 += aray[k] + "\r\n" + "Теперь придумай слово,которое начинается на букву" + "\"";
-                                        //if (word == 'ь')
-                                        //{
-                                        //    int ii = aray[k].Length - 2;
-                                        //}
-                                        //else
-                                        //{
-                                        int ii = aray[k].Length - 1;
-                                        //}
-                                        // request3 += aray[num][ii] + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
-                                        string aaa = aray[k];
-                                        request3 += aray[k][ii] + "\"" + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
-                                        WebClient client3 = new WebClient();
-                                        string answer3 = Encoding.UTF8.GetString(client.DownloadData(request3));
+
+
+                                    string request3 = "https://api.vk.com/method/messages.send?random_id=" + value.ToString() + "&user_id=";
+                                    request3 += data.response.items[i].last_message.from_id.ToString() + "&message=";
+                                    request3 += aray[k] + "\r\n" + "Теперь придумай слово,которое начинается на букву" + "\"";
+                                    //if (word == 'ь')
+                                    //{
+                                    //    int ii = aray[k].Length - 2;
+                                    //}
+                                    //else
+                                    //{
+                                    int ii = aray[k].Length - 1;
+                                    //}
+                                    // request3 += aray[num][ii] + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
+                                    string aaa = aray[k];
+                                    request3 += aray[k][ii] + "\"" + "&access_token=ac0624e8fa2d28708590d46d03229f53cd539d227acdf82310295890b30b3c60e79d7db62181dd67f1876&v=5.90";
+                                    WebClient client3 = new WebClient();
+                                    string answer3 = Encoding.UTF8.GetString(client.DownloadData(request3));
                                     // aray[k] = "斯";
                                     dict[data.response.items[i].last_message.from_id.ToString()].Add(aray[k]);
                                     dict[data.response.items[i].last_message.from_id.ToString()].Add(data.response.items[i].last_message.text.ToLower());
                                     //Collection.Add();
                                     //verif.Add;
 
-                                    BotLetter = aray[k].ToUpper()[aray[k].Length - 1];
-                                        if (BotLetter == 'ь')
-                                        {
-                                            BotLetter = aray[k][aray[k].Length - 2];
-                                        }
-                                        f.labelError.Text = "Cлово найдено";
+                                    BotLetter= aray[k].ToUpper()[aray[k].Length - 1];
+                                    if (BotLetter == 'Ь')
+                                    {
+                                        BotLetter = aray[k][aray[k].Length - 2];
+                                    }
+                                    //dictLetter.Add(data.response.items[i].last_message.from_id.ToString(),BotLetter);
+
+                                    dictLetter[data.response.items[i].last_message.from_id.ToString()] = BotLetter;
+                                    f.labelError.Text = "Cлово найдено";
                                         ListViewItem lvi = new ListViewItem(texts[1]);//, imageList1.Images.Count - 1 
                                         f.listViewPlayers.Items.Add(lvi);
                                         break;
